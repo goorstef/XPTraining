@@ -1,7 +1,7 @@
 package mock;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.Test;
 
@@ -15,16 +15,16 @@ public class FlightTest {
 		FlightImpl flight = new FlightImpl(150);
 		flight.addPassenger(JEAN_MICHEL_SAIVE);
 
-		assertEquals(1, flight.numberOfPassengers());
-		assertTrue(flight.isPassengerOnFlight(JEAN_MICHEL_SAIVE));
+		assertThat(flight.numberOfPassengers()).isEqualTo(1);
+		assertThat(flight.isPassengerOnFlight(JEAN_MICHEL_SAIVE)).isTrue();
 	}
 
-	@Test(expected=FlightFullyBookedException.class)
+	@Test
 	public void testCanNotAddPassengerToFullyBookedFlight() throws FlightFullyBookedException {
-		
 		FlightImpl flight = new FlightImpl(1);
 		flight.addPassenger(JEAN_MICHEL_SAIVE);
 
-		flight.addPassenger(PHILIPPE_SAIVE);
+		assertThatThrownBy(() -> flight.addPassenger(PHILIPPE_SAIVE))
+				.isInstanceOf(FlightFullyBookedException.class);
 	}
 }

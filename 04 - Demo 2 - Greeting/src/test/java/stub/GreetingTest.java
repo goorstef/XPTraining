@@ -1,23 +1,22 @@
 package stub;
 
-import static junit.framework.Assert.assertEquals;
-
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
 public class GreetingTest {
 
 	private Greeting g;
-	
+
 	@Before
 	public void setUp() throws Exception {
-		g  = new Greeting();
+		g = new Greeting();
 	}
 
 	@Test
-	public void morning(){
+	public void morning() {
 		String s = g.getGreeting();
-		assertEquals("Good Morning", s);
+		Assertions.assertThat(s).isEqualTo("Good Morning");
 	}
-	
+
 }
